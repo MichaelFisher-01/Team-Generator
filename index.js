@@ -5,41 +5,125 @@ const Employee = require('./lib/employee');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
+const ListPrompt = require('inquirer/lib/prompts/list');
 //Global Variabls
-const allManagers = [];
-const allEngineers = [];
-const allInterns = [];
-const addEmployee = true;
-//Aquiring Input
+const allEmployees = [];
 
-inquirer
-	.prompt([
-		{
-			type: 'list',
-			message: 'What type of employee are we making?',
-			choices: ['Manager', 'Engineer', 'Intern', 'Exit'],
-			name: 'employeeGen',
-		},
-	])
-	.then((data) => {
-		if (data.employeeGen === 'Manager') {
-			let manager1 = new Manager();
-			manager1.getBasicInfo();
-		} else if (data.employeeGen === 'Engineer') {
-			let engineer1 = new Engineer();
+//Global Functions
+const getManagerData = () => {
+	inquirer
+		.prompt([
+			{
+				type: 'input',
+				message: "What is the manager's name for this team?",
+				name: 'name',
+			},
+			{
+				type: 'input',
+				message: `What is the manager's email address?`,
+				name: 'email',
+			},
+			{
+				type: 'input',
+				message: `What is the manager's employee id?`,
+				name: 'id',
+			},
+			{
+				type: 'input',
+				message: `What is the manager's office number?`,
+				name: 'officeNumber',
+			},
+			{
+				type: 'confirm',
+				message: 'Does this manager have employees?',
+				name: 'addEmployee',
+			},
+		])
+		.then((answers) => {
+			let manager = new Manager(
+				answers.name,
+				answers.id,
+				answers.email,
+				answers.officeNumber
+			);
+			allEmployees.push(manager);
+			if (answers.addEmployee === true) {
+				getEmployeeData();
+			}
+		});
+};
 
-			engineer1.getBasicInfo();
-			engineer1.getEngineerInfo();
+const getEmployeeData = () => {
+	inquirer
+		.prompt([
+			{
+				type: 'input',
+				message: "What is this employee's name?",
+				name: 'name',
+			},
+			{
+				type: 'input',
+				message: "What is this employee's email address?",
+				name: 'email',
+			},
+			{
+				type: 'input',
+				message: "What is this empoylee's id?",
+				name: 'id',
+			},
+			{
+				type: 'list',
+				message: 'What role does this employee have?',
+				choices: ['Engineer', 'Intern'],
+				name: 'role',
+			},
+			{
+				type: 'input',
+				message: "What is this engineer's github username?",
+				name: 'github',
+				when(answers) {
+					return answers.role === 'Engineer';
+				},
+			},
+			{
+				type: 'input',
+				message: 'What school does the intern go too?',
+				name: 'school',
+				when(answers) {
+					return answers.role === 'Intern';
+				},
+			},
+			{
+				type: 'confirm',
+				message: 'Would you like to add an employee?',
+				name: 'addEmployee',
+				default: true,
+			},
+		])
+		.then((answers) => {
+			if (answers.role === 'Engineer') {
+				let engineer = new Engineer(
+					answers.name,
+					answers.id,
+					answers.email,
+					answers.github
+				);
+				allEmployees.push(engineer);
+			} else {
+				let intern = new Intern(
+					answers.name,
+					answers.id,
+					answers.email,
+					answers.school
+				);
+				allEmployees.push(intern);
+			}
+			if (answers.addEmployee) {
+				getEmployeeData();
+			} else {
+				console.log(allEmployees);
+			}
+		});
+};
 
-			console.log(engineer1);
-		} else if (data.employeeGen === 'Intern') {
-			let intern1 = new Intern();
-
-			intern1.getBasicInfo();
-			intern1.getInternInfo();
-
-			console.log(intern1);
-		} else if (data.employeeGen === 'Exit') {
-			addEmployee === false;
-		}
-	});
+getManagerData();
