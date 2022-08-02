@@ -6,6 +6,8 @@ const Employee = require('./lib/employee');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
+const writeHTML = require('./src/writeHTML');
+const writeCSS = require('./src/writeCSS');
 
 //Global Variabls
 const allEmployees = [];

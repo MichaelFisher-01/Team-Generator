@@ -1,6 +1,8 @@
+const fs = require('fs');
+
 const allCards = ``;
 
-const createCard = (allEmployees) => {
+const createCard = (employeeArray) => {
 	allEmployees.forEach((employee) => {
 		switch (employee.getRole()) {
 			case 'Manager':
@@ -37,7 +39,7 @@ const createCard = (allEmployees) => {
 	newCard += allCards;
 };
 
-const html = `<!DOCTYPE html>
+const htmlText = `<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -63,3 +65,13 @@ const html = `<!DOCTYPE html>
 		</div>
 	</body>
 </html>`;
+const fileName = '.dist/index.html';
+
+const generateHTML = (allEmployees) => {
+	createCard(allEmployees);
+	fs.writeFile(fileName, htmlText, (err) =>
+		err ? console.log(err) : console.log('Html Generated Successfully')
+	);
+};
+
+module.exports = generateHTML(allEmployees);
