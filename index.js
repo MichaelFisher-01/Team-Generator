@@ -13,7 +13,7 @@ const writeCSS = require('./src/writeCSS');
 const allEmployees = [];
 
 //Global Functions
-const getManagerData = () => {
+const getData = () => {
 	inquirer
 		.prompt([
 			{
@@ -124,17 +124,25 @@ const getEmployeeData = () => {
 			if (answers.addEmployee) {
 				getEmployeeData();
 			} else {
-				console.log(allEmployees);
-				allEmployees.forEach((employee) => {
-					console.log('Activating For Each Loop!');
-					console.log(employee.getName());
-					console.log(employee.getId());
-					console.log(employee.getEmail());
-					console.log(employee.getRole());
-				});
+				console.log('Data Gathering Complete');
+
+				const file1 = writeHTML(allEmployees);
+				const file2 = writeCSS();
+
+				const htmlFileName = './dist/index.html';
+				fs.writeFile(htmlFileName, file1, (err) =>
+					err ? console.log(err) : console.log('Html Generated Successfully')
+				);
+
+				const cssFileName = './dist/style.css';
+				fs.writeFile(cssFileName, file2, (err) =>
+					err
+						? console.log('Error with CSS write.')
+						: console.log('Html Generated Successfully')
+				);
 			}
 		});
 };
 
 // Launch Program
-getManagerData();
+getData();
