@@ -1,11 +1,12 @@
 //Required Installs
 const inquirer = require('inquirer');
+const fs = require('fs');
 //Required Libraries
 const Employee = require('./lib/employee');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
-const ListPrompt = require('inquirer/lib/prompts/list');
+
 //Global Variabls
 const allEmployees = [];
 
@@ -122,8 +123,16 @@ const getEmployeeData = () => {
 				getEmployeeData();
 			} else {
 				console.log(allEmployees);
+				allEmployees.forEach((employee) => {
+					console.log('Activating For Each Loop!');
+					console.log(employee.getName());
+					console.log(employee.getId());
+					console.log(employee.getEmail());
+					console.log(employee.getRole());
+				});
 			}
 		});
 };
 
+// Launch Program
 getManagerData();
