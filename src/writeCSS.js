@@ -1,3 +1,4 @@
+//CSS does not have to change based on the type of information.
 const cssText = () => {
 	return `body {
         margin: 0;

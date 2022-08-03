@@ -1,9 +1,9 @@
-const fs = require('fs');
-
+// Storage for the generated cards
 var allCards = ``;
-
+//Function that will be exported to the main file. Loops through all employees in the array sent from main file.
 const htmlGenerator = (employeeArray) => {
 	employeeArray.forEach((employee) => {
+		//Switch statement to generated different titles based on the role of the employee.
 		switch (employee.getRole()) {
 			case 'Manager':
 				icon = '<i class="fa-solid fa-mug-hot"></i>';
@@ -20,7 +20,7 @@ const htmlGenerator = (employeeArray) => {
 			default:
 				console.log('The switch has failed');
 		}
-
+		// Variable to store the text used to create the card
 		var newCard = `<div class="card">
         <div class="cardTitle">
                 <div class="name">${employee.getName()}</div>
@@ -34,8 +34,10 @@ const htmlGenerator = (employeeArray) => {
                 ${specificInfo}
             </div>
         </div>`;
+		//Pushing the newly created card to card storage.
 		allCards += newCard;
 	});
+	//Once all card have been created they will be put into the below HTML within the card container.
 	var result = `<!DOCTYPE html>
     <html lang="en">
         <head>

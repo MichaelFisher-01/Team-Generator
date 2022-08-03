@@ -12,7 +12,7 @@ const writeCSS = require('./src/writeCSS');
 //Global Variabls
 const allEmployees = [];
 
-//Global Functions
+//CLI questions to start the program. Obtains the manager information.
 const getData = () => {
 	inquirer
 		.prompt([
@@ -55,7 +55,7 @@ const getData = () => {
 			}
 		});
 };
-
+//This loops through the employee questions as long as Y is entered to add employees.
 const getEmployeeData = () => {
 	inquirer
 		.prompt([
@@ -90,7 +90,7 @@ const getEmployeeData = () => {
 			},
 			{
 				type: 'input',
-				message: 'What school does the intern go too?',
+				message: 'What school does this intern go too?',
 				name: 'school',
 				when(answers) {
 					return answers.role === 'Intern';
@@ -98,7 +98,7 @@ const getEmployeeData = () => {
 			},
 			{
 				type: 'confirm',
-				message: 'Would you like to add an employee?',
+				message: 'Would you like to add an another employee?',
 				name: 'addEmployee',
 				default: true,
 			},
@@ -123,6 +123,7 @@ const getEmployeeData = () => {
 			}
 			if (answers.addEmployee) {
 				getEmployeeData();
+				// If we are done adding employees the nusing the formats from the src folder we will generate a brand new HTML and CSS file so we can display this information on a webpage.
 			} else {
 				console.log('Data Gathering Complete');
 
