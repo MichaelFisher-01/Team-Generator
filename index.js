@@ -60,6 +60,12 @@ const getEmployeeData = () => {
 	inquirer
 		.prompt([
 			{
+				type: 'list',
+				message: 'What role does this employee have?',
+				choices: ['Engineer', 'Intern'],
+				name: 'role',
+			},
+			{
 				type: 'input',
 				message: "What is this employee's name?",
 				name: 'name',
@@ -73,12 +79,6 @@ const getEmployeeData = () => {
 				type: 'input',
 				message: "What is this empoylee's id?",
 				name: 'id',
-			},
-			{
-				type: 'list',
-				message: 'What role does this employee have?',
-				choices: ['Engineer', 'Intern'],
-				name: 'role',
 			},
 			{
 				type: 'input',
