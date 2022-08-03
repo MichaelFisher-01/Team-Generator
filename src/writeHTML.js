@@ -11,7 +11,7 @@ const htmlGenerator = (employeeArray) => {
 				break;
 			case 'Engineer':
 				icon = `<i class="fa-solid fa-glasses"></i>`;
-				specificInfo = `<div class="infoBox">Github: <a href="https://github.com/${employee.getGitHub()}"</a> ${employee.getGithub()}</div>`;
+				specificInfo = `<div class="infoBox">Github: <a href="https://github.com/${employee.getGithub()}"> ${employee.getGithub()}</a></div>`;
 				break;
 			case 'Intern':
 				icon = `<i class="fa-solid fa-graduation-cap"></i>`;
